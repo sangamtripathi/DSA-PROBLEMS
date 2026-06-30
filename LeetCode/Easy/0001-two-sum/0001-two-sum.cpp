@@ -3,7 +3,7 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         int n = nums.size();
         vector<int> result;
-        map<int,int>mpp;
+        unordered_map<int,int>mpp;
         
         for(int i{};i<n;++i){
             int subtract =target-nums[i];
