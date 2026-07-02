@@ -1,10 +1,7 @@
 class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
-       if (nums.empty())
-        {
-            return {};
-        }
+      
         int n = nums.size();
         vector<int> result(n, 0);
         int positive{}, negative{1};
