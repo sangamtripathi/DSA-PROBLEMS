@@ -4,7 +4,7 @@ public:
         int m = matrix.size();    // ROWS
         int n = matrix[0].size(); // COLUMNS
 
-        for (int i{}; i < m; ++i)
+        for (int i{}; i < m-1; ++i)
         {
             for (int j{i + 1}; j < n; ++j)
             {
