@@ -3,8 +3,7 @@ public:
     long long check(vector<int>& nums, int mid) {
         long long sum{};
         for (int i{}; i < nums.size(); ++i) {
-            long long rem = (nums[i] + mid - 1) / mid;
-            sum += rem;
+            sum += ceil((double)nums[i] / mid);
         }
         return sum;
     }
