@@ -5,16 +5,13 @@ public:
         int right = s.size() - 1;
         
         while (left < right) {
-            // Skip non-alphanumeric characters from the left
             while (left < right && !isalnum(s[left])) {
                 left++;
             }
-            // Skip non-alphanumeric characters from the right
             while (left < right && !isalnum(s[right])) {
                 right--;
             }
             
-            // Compare characters after converting them to lowercase
             if (tolower(s[left]) != tolower(s[right])) {
                 return false;
             }
