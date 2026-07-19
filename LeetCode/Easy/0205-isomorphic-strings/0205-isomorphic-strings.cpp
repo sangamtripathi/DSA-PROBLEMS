@@ -4,8 +4,8 @@ public:
         if (s.length() != t.length()) {
             return false;
         }
-        map<char, char> mpp;
-        set<char> used_in_t;
+        unordered_map<char, char> mpp;
+        unordered_set<char> used_in_t;
         int n = s.length();
 
         for (int i{}; i < n; ++i) {
