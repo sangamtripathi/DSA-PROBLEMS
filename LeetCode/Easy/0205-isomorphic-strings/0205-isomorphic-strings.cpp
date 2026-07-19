@@ -4,25 +4,21 @@ public:
         if (s.length() != t.length()) {
             return false;
         }
-        unordered_map<char, char> mpp;
-        unordered_set<char> used_in_t;
+
+        int last_seen_s[256] = {0};
+        int last_seen_t[256] = {0};
+
         int n = s.length();
 
-        for (int i{}; i < n; ++i) {
-            if (mpp.find(s[i]) != mpp.end()) {
-                if (t[i] == mpp[s[i]]) {
-                    continue;
-                } else {
-                    return false;
-                }
-            } else {
-                if (used_in_t.find(t[i]) != used_in_t.end()) {
-                    return false;
-                } else {
-                    mpp[s[i]] = t[i];
-                    used_in_t.insert(t[i]);
-                }
+        for (int i = 0; i < n; ++i) {
+            int char_s = static_cast<unsigned char>(s[i]);
+            int char_t = static_cast<unsigned char>(t[i]);
+
+            if (last_seen_s[char_s] != last_seen_t[char_t]) {
+                return false;
             }
+            last_seen_s[char_s] = i + 1;
+            last_seen_t[char_t] = i + 1;
         }
         return true;
     }
