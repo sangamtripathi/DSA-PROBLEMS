@@ -1,7 +1,7 @@
 class Solution {
 public:
     int myAtoi(string s) {
-        long long result = 0;
+        int result = 0;
         int sign = 1;
         int i = 0;
         int n = s.length();
@@ -11,23 +11,19 @@ public:
         }
 
         if (i < n && (s[i] == '+' || s[i] == '-')) {
-            if (s[i] == '-') {
-                sign = -1;
-            }
+            sign = (s[i] == '-') ? -1 : 1;
             i++;
         }
 
         while (i < n && s[i] >= '0' && s[i] <= '9') {
             int digit = s[i] - '0';
+
+            if (result > INT_MAX / 10 ||
+                (result == INT_MAX / 10 && digit > 7)) {
+                return (sign == 1) ? INT_MAX : INT_MIN;
+            }
+
             result = result * 10 + digit;
-
-            if (sign == 1 && result > INT_MAX) {
-                return INT_MAX;
-            }
-            if (sign == -1 && -result < INT_MIN) {
-                return INT_MIN;
-            }
-
             i++;
         }
 
