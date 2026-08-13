@@ -39,13 +39,13 @@ public:
 
         while (second) {
             if (first->val != second->val) {
-                Reverse(NewHead);
+                slow->next = Reverse(NewHead);
                 return false;
             }
             second = second->next;
             first = first->next;
         }
-        Reverse(NewHead);
+        slow->next = Reverse(NewHead);
         return true;
     }
 };
