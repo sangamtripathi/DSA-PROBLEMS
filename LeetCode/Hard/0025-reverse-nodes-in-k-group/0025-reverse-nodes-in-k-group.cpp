@@ -1,64 +1,58 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
-    ListNode* findNode(ListNode* temp, int k) {
-        k -= 1; // 0-indexed distance
-        while (temp != nullptr && k > 0) {
-            k--;
-            temp = temp->next;
-        }
-        return temp;
-    }
-
-    // Standard linked list reversal
-    void reverse(ListNode* head) {
-        ListNode* current = head;
-        ListNode* prev = nullptr;
-        while (current != nullptr) {
-            ListNode* next = current->next;
-            current->next = prev;
-            prev = current;
-            current = next;
-        }
-    }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode* temp = head;
-        ListNode* kthNode = nullptr;
-        ListNode* prevNode = nullptr;
-        ListNode* NextNode = nullptr;
-        while (temp) {
-            kthNode = findNode(temp, k);
-            if (!kthNode) {
-                if (prevNode) {
-                    prevNode->next = temp;
-                }
-                break;
+        if (!head || k == 1) return head;
+
+        // 1. Create a dummy node to handle edge cases gracefully (like the head changing)
+        ListNode dummy(0);
+        dummy.next = head;
+        
+        ListNode* prevGroupTail = &dummy;
+        ListNode* curr = head;
+
+        while (curr) {
+            // 2. Find the k-th node
+            ListNode* kthNode = curr;
+            int count = 1;
+            while (kthNode && count < k) {
+                kthNode = kthNode->next;
+                count++;
             }
 
-            NextNode = kthNode->next;
-            kthNode->next = nullptr;
-            reverse(temp);
+            // If there are less than k nodes left, we are done
+            if (!kthNode) break;
 
-            if (temp == head) {
-                head = kthNode;
-            } else {
-                prevNode->next = kthNode;
-            }
-
-            prevNode = temp;
-            temp = NextNode;
-
+            // 3. Keep track of the next group's starting node
+            ListNode* nextGroupHead = kthNode->next;
             
+            // 4. Isolate the current k-group and reverse it
+            kthNode->next = nullptr;
+            prevGroupTail->next = reverse(curr);
+            
+            // 5. Reconnect the reversed group to the rest of the list
+            // Note: After reversal, 'curr' is now the tail of this group
+            curr->next = nextGroupHead;
+            
+            // 6. Move pointers forward for the next iteration
+            prevGroupTail = curr;
+            curr = nextGroupHead;
         }
-        return head;
+
+        // dummy.next naturally points to the new head of the entire list
+        return dummy.next;
+    }
+
+private:
+    // Helper function returns the new head of the reversed list
+    ListNode* reverse(ListNode* head) {
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        while (curr) {
+            ListNode* nextNode = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return prev;
     }
 };
