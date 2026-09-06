@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        if (!head || !head->next ) {
+        if (!head || !head->next) {
             return head;
         }
         ListNode* temp = head;
@@ -21,17 +21,18 @@ public:
         ListNode* prev = dummy;
 
         while (temp && temp->next) {
-            prev->next=temp->next;
+            prev->next = temp->next;
 
             ListNode* nextnode = temp->next->next;
-            
+
             temp->next->next = temp;
             temp->next = nextnode;
 
-            prev=temp;
+            prev = temp;
             temp = nextnode;
         }
-
-        return dummy->next;
+        ListNode* result = dummy->next;
+        delete dummy;
+        return result;
     }
 };
