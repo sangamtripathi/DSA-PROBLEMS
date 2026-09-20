@@ -1,21 +1,21 @@
 class Solution {
 public:
     bool checkPerfectNumber(int num) {
-        int sum{};
+        if (num <= 1) {
+            return false;
+        }
 
-        for (int i{1}; i < sqrt(num); ++i) {
+        int sum{1};
+
+        for (int i{2}; i * i <= num; ++i) {
             if (num % i == 0) {
                 sum += i;
-                if (num / i != num) {
+                if (i * i != num) {
                     sum += (num / i);
                 }
             }
         }
 
-        if(sum==num){
-            return true;
-        }else{
-            return false;
-        }
+        return sum == num;
     }
 };
